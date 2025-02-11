@@ -1,0 +1,8 @@
+---
+- name: basic node bootstrapping
+  become: true
+  hosts:
+    - control
+    - worker
+  roles:
+    - node_bootstrap

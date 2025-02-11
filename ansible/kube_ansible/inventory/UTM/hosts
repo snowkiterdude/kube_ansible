@@ -1,0 +1,10 @@
+[local]
+localhost ansible_connection=local
+
+[control]
+control-01
+
+[worker]
+worker-01
+worker-02
+worker-03
