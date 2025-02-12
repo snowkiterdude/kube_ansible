@@ -1,0 +1,26 @@
+- name: Write noswap systemd service config file
+  template:
+    src: noswap.service.j2
+    dest: /etc/systemd/system/noswap.service
+    owner: root
+    group: root
+    mode: 0644
+  tags:
+    - node_bootstrap
+    - disable_swap
+
+- name: Enable noswap service
+  systemd:
+    name: noswap
+    state: started
+    enabled: true
+    daemon_reload: true
+  tags:
+    - node_bootstrap
+    - disable_swap
+
+- name: Gather facts
+  ansible.builtin.setup:
+  tags:
+    - node_bootstrap
+    - disable_swap

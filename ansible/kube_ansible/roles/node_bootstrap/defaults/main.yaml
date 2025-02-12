@@ -15,7 +15,7 @@ selinux_permissive: true
 
 # min memory in MB that the node should have
 # K8s docs says 2Gib is recommended at the very least for playground clusters
-min_mem_mb: 1600
+min_mem_mb: 1800
 
 
 additional_apt_packages:
@@ -28,3 +28,32 @@ additional_dnf_packages:
   - bind-utils
   - mtr
   - vim
+
+k8s_modules:
+  - br_netfilter
+
+k8s_sysctl:
+  - name: net.bridge.bridge-nf-call-iptables
+    value: 1
+  - name: net.bridge.bridge-nf-call-ip6tables
+    value: 1
+  - name: net.ipv4.ip_forward
+    value: 1
+  - name: net.ipv6.conf.all.forwarding
+    value: 1
+  - name: net.ipv6.conf.all.disable_ipv6
+    value: 0
+  - name: net.ipv6.conf.default.disable_ipv6
+    value: 0
+  - name: net.ipv6.conf.all.accept_ra
+    value: 2
+  - name: net.ipv6.conf.default.accept_ra
+    value: 2
+  - name: net.ipv6.conf.all.accept_ra_defrtr
+    value: 1
+  - name: net.ipv6.conf.default.accept_ra_defrtr
+    value: 1
+  - name: net.ipv6.conf.all.autoconf
+    value: 1
+  - name: net.ipv6.conf.default.autoconf
+    value: 1

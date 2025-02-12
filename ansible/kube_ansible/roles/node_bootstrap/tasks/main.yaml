@@ -17,15 +17,23 @@
       - "fqdn: {{ ansible_facts.fqdn }}"
       - "swap_total: {{ ansible_facts.swaptotal_mb }}"
       - "mem_total: {{ ansible_facts.memtotal_mb }}"
-      # - "ipv4: {{ ansible_facts.all_ipv4_addresses }}"
-      # - "virt: {{ ansible_facts.virtualization_type }}"
-      # - "architecture: {{ ansible_facts.architecture }}"
-      # - "hostname: {{ ansible_facts.hostname }}"
-      # - "kernel: {{ ansible_facts.kernel }}"
-      # - "kernel_version: {{ ansible_facts.kernel_version }}"
+      - "ipv4: {{ ansible_facts.all_ipv4_addresses }}"
+      - "virt: {{ ansible_facts.virtualization_type }}"
+      - "architecture: {{ ansible_facts.architecture }}"
+      - "hostname: {{ ansible_facts.hostname }}"
+      - "kernel: {{ ansible_facts.kernel }}"
+      - "kernel_version: {{ ansible_facts.kernel_version }}"
   tags:
     - always
     - node_bootstrap
+
+- name: include disable_swap tasks
+  ansible.builtin.import_tasks: disable_swap.yaml
+  when:
+    - ansible_facts.swaptotal_mb | int > 0
+  tags:
+    - node_bootstrap
+    - disable_swap
 
 - name: fail if the system is not supported
   ansible.builtin.assert:
@@ -42,10 +50,6 @@
     - always
     - node_bootstrap
 
-
-###########
-# SELinux #
-###########
 - name: Check if SELinux configuration file exists
   stat:
     path: /etc/selinux/config
@@ -62,20 +66,18 @@
     - node_bootstrap
     - selinux
 
-
-#####################
-# enable forwarding #
-#####################
-- name: include forwarding tasks
-  ansible.builtin.import_tasks: forwarding.yaml
+- name: include kmodules tasks
+  ansible.builtin.import_tasks: kmodules.yaml
   tags:
     - node_bootstrap
-    - forwarding
+    - kmodules
 
+- name: include sysctl tasks
+  ansible.builtin.import_tasks: sysctl.yaml
+  tags:
+    - node_bootstrap
+    - sysctl
 
-#######################
-# kube packages - apt #
-#######################
 - name: include apt tasks
   ansible.builtin.include_tasks: apt.yaml
   when: ansible_facts.pkg_mgr | lower == "apt"
@@ -83,10 +85,6 @@
     - node_bootstrap
     - apt
 
-
-#######################
-# kube packages - dnf #
-#######################
 - name: include dnf tasks
   ansible.builtin.include_tasks: dnf.yaml
   when: ansible_facts.pkg_mgr | lower == "dnf"
@@ -95,16 +93,8 @@
     - dnf
 
 
-###################
-# enable firewall #
-###################
-- name: include firewall tasks
-  ansible.builtin.import_tasks: firewall.yaml
-  tags:
-    - node_bootstrap
-    - firewall
+
 
 
 # todo setup bridging?!?
 
-# install firewalld and open ports

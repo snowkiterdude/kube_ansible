@@ -1,0 +1,11 @@
+---
+- name: Configure sysctl
+  sysctl:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    state: present
+    reload: yes
+  loop: "{{ k8s_sysctl }}"
+  tags:
+    - node_bootstrap
+    - sysctl
