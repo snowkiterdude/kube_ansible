@@ -2,9 +2,7 @@
 localhost ansible_connection=local
 
 [control]
-52.24.182.40
+54.177.34.136
 
 [worker]
-35.88.235.154
-18.246.68.77
-35.90.229.80
+13.56.229.101

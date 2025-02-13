@@ -3,6 +3,7 @@
   become: true
   hosts:
     - control
-    # - worker
+    - worker
   roles:
-    - node_bootstrap
+    # - node_bootstrap
+    - containerd

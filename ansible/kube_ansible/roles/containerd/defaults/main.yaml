@@ -1,0 +1,22 @@
+
+# version to install
+containerd_version: v2.0.2
+
+# https://github.com/containerd/containerd/releases
+containerd_releases:
+  - version: v2.0.2
+    arch: amd64
+    tar_url: https://github.com/containerd/containerd/releases/download/v2.0.2/containerd-2.0.2-linux-amd64.tar.gz
+    checksum_url: https://github.com/containerd/containerd/releases/download/v2.0.2/containerd-2.0.2-linux-amd64.tar.gz.sha256sum
+  - version: v2.0.2
+    arch: arm64
+    tar_url: https://github.com/containerd/containerd/releases/download/v2.0.2/containerd-2.0.2-linux-arm64.tar.gz
+    checksum_url: https://github.com/containerd/containerd/releases/download/v2.0.2/containerd-2.0.2-linux-arm64.tar.gz.sha256sum
+  - version: v1.7.25
+    arch: amd64
+    tar_url: https://github.com/containerd/containerd/releases/download/v1.7.25/containerd-1.7.25-linux-amd64.tar.gz
+    checksum_url: https://github.com/containerd/containerd/releases/download/v1.7.25/containerd-1.7.25-linux-amd64.tar.gz.sha256sum
+  - version: v1.7.25
+    arch: arm64
+    tar_url: https://github.com/containerd/containerd/releases/download/v1.7.25/containerd-1.7.25-linux-arm64.tar.gz
+    checksum_url: https://github.com/containerd/containerd/releases/download/v1.7.25/containerd-1.7.25-linux-arm64.tar.gz.sha256sum

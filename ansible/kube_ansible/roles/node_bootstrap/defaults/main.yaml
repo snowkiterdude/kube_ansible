@@ -15,7 +15,7 @@ selinux_permissive: true
 
 # min memory in MB that the node should have
 # K8s docs says 2Gib is recommended at the very least for playground clusters
-min_mem_mb: 1800
+min_mem_mb: 1700
 
 
 additional_apt_packages:
@@ -57,3 +57,15 @@ k8s_sysctl:
     value: 1
   - name: net.ipv6.conf.default.autoconf
     value: 1
+
+
+containerd_releases:
+  - version: v2.0.2
+    arch: amd64
+    tar_url: https://github.com/containerd/containerd/releases/download/v2.0.2/containerd-2.0.2-linux-amd64.tar.gz
+    checksum_url: https://github.com/containerd/containerd/releases/download/v2.0.2/containerd-2.0.2-linux-amd64.tar.gz.sha256sum
+  - version: v2.0.2
+    arch: arm64
+    tar_url: https://github.com/containerd/containerd/releases/download/v2.0.2/containerd-2.0.2-linux-arm64.tar.gz
+    checksum_url: https://github.com/containerd/containerd/releases/download/v2.0.2/containerd-2.0.2-linux-arm64.tar.gz.sha256sum
+

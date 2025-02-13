@@ -1,0 +1,13 @@
+---
+- name: Check if containerd is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/containerd
+  register: containerd_binary
+  tags:
+    - containerd
+
+- name: Include containerd installation tasks
+  ansible.builtin.include_tasks: install_containerd.yaml
+  when: not containerd_binary.stat.exists
+  tags:
+    - containerd
