@@ -36,7 +36,7 @@
     - name: Copy nerdctl to /usr/local/bin
       ansible.builtin.copy:
         src: /tmp/nerdctl/nerdctl
-        dest: /usr/local/bin/
+        dest: /usr/local/bin/nerdctl
         remote_src: yes
         mode: '0755'
         owner: root
@@ -58,3 +58,4 @@
         msg: "Failed to download and verify containerd"
   tags:
     - containerd
+    - nerdctl

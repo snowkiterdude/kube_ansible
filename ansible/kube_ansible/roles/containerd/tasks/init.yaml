@@ -5,6 +5,8 @@
   changed_when: false
   tags:
     - containerd
+    - cni_plugins
+    - runc
 
 - name: Verify glibc-based system
   ansible.builtin.fail:
@@ -12,12 +14,16 @@
   when: "'libc.so.6' not in ldd_output.stdout"
   tags:
     - containerd
+    - cni_plugins
+    - runc
 
 - name: Get system architecture
   ansible.builtin.set_fact:
     system_arch: "{{ 'arm64' if ansible_architecture == 'aarch64' else 'amd64' }}"
   tags:
     - containerd
+    - cni_plugins
+    - runc
 
 - name: Set containerd download info
   ansible.builtin.set_fact:
@@ -28,6 +34,8 @@
   register: containerd_info_result
   tags:
     - containerd
+    - cni_plugins
+    - runc
 
 - name: Set final containerd info
   ansible.builtin.set_fact:
@@ -35,12 +43,16 @@
   when: containerd_info_result is success
   tags:
     - containerd
+    - cni_plugins
+    - runc
 
 - name: debug
   ansible.builtin.debug:
     var: containerd_info
   tags:
     - containerd
+    - cni_plugins
+    - runc
 
 - name: Ensure /usr/local/bin is in PATH
   ansible.builtin.copy:
@@ -51,3 +63,5 @@
     group: root
   tags:
     - containerd
+    - cni_plugins
+    - runc

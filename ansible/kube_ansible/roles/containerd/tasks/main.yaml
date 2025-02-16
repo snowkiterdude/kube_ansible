@@ -8,6 +8,9 @@
   register: containerd_binary
   tags:
     - containerd
+    - cni_plugins
+    - runc
+    - nerdctl
 
 - name: Include init installation tasks
   ansible.builtin.include_tasks: init.yaml
@@ -16,6 +19,9 @@
       reinstall | default(false)
   tags:
     - containerd
+    - cni_plugins
+    - runc
+    - nerdctl
 
 - name: Include containerd installation tasks
   ansible.builtin.include_tasks: containerd.yaml
@@ -32,3 +38,22 @@
       reinstall | default(false)
   tags:
     - containerd
+    - runc
+
+- name: Include cni_plugins installation tasks
+  ansible.builtin.include_tasks: cni_plugins.yaml
+  when:
+    - not containerd_binary.stat.exists or
+      reinstall | default(false)
+  tags:
+    - containerd
+    - cni_plugins
+
+- name: Include nerdctl installation tasks
+  ansible.builtin.include_tasks: nerdctl.yaml
+  when:
+    - not containerd_binary.stat.exists or
+      reinstall | default(false)
+  tags:
+    - containerd
+    - nerdctl

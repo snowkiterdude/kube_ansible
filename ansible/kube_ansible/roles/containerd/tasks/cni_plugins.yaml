@@ -1,0 +1,91 @@
+---
+- name: Check existing CNI plugins
+  ansible.builtin.stat:
+    path: /opt/cni/bin/bridge
+  register: cni_check
+  tags:
+    - containerd
+    - cni_plugins
+
+- name: Check CNI version if installed
+  ansible.builtin.command: /opt/cni/bin/bridge --version
+  register: cni_version
+  changed_when: false
+  when: cni_check.stat.exists
+  ignore_errors: true
+  tags:
+    - containerd
+    - cni_plugins
+
+- name: debug
+  debug:
+    msg:
+      - "cni plugins version: {{ (cni_version.stderr or cni_version.stdout) | regex_search('v(\\d+\\.\\d+\\.\\d+)', '\\1') | first }}"
+  tags:
+    - containerd
+    - cni_plugins
+
+- name: Set CNI version fact
+  ansible.builtin.set_fact:
+    cni_current_version: "{{ (cni_version.stderr or cni_version.stdout) | regex_search('v(\\d+\\.\\d+\\.\\d+)', '\\1') | first }}"
+  when: cni_version.rc == 0
+  tags:
+    - containerd
+    - cni_plugins
+
+- name: Download cni plugins for containerd
+  block:
+
+    - name: Create /tmp/cni_plugins directory
+      ansible.builtin.file:
+        path: /tmp/cni_plugins
+        state: directory
+
+    - name: Download checksum file
+      ansible.builtin.get_url:
+        url: "{{ containerd_info.cni_checksum_url }}"
+        dest: /tmp/cni_plugins/cni.sha256sum
+        mode: '0644'
+
+    - name: Read checksum file
+      ansible.builtin.slurp:
+        src: /tmp/cni_plugins/cni.sha256sum
+      register: checksum_content
+
+    - name: Download and verify the cni plugins
+      ansible.builtin.get_url:
+        url: "{{ containerd_info.cni_url }}"
+        dest: /tmp/cni_plugins/cni_plugins.tgz
+        checksum: "sha256:{{ (checksum_content['content'] | b64decode).split(' ')[0] }}"
+        mode: '0644'
+
+    - name: Extract cni plugins to /opt/cni/bin
+      ansible.builtin.unarchive:
+        src: /tmp/cni_plugins/cni_plugins.tgz
+        dest: /opt/cni/bin
+        remote_src: yes
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Clean up containerd downloaded files
+      ansible.builtin.file:
+        path: /tmp/cni_plugins
+        state: absent
+
+  rescue:
+    - name: Clean up containerd downloaded files
+      ansible.builtin.file:
+        path: /tmp/cni_plugins
+        state: absent
+
+    - name: Fail with error
+      ansible.builtin.fail:
+        msg: "Failed to download and verify the cni plugins"
+
+  when:
+    - not cni_check.stat.exists or
+      (cni_current_version is version(cni_plugin_min_version, '<'))
+  tags:
+    - containerd
+    - cni_plugins

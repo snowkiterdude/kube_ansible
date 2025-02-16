@@ -22,12 +22,14 @@ additional_apt_packages:
   - net-tools
   - dnsutils
   - mtr
+  - gnupg2
 
 additional_dnf_packages:
   - net-tools
   - bind-utils
   - mtr
   - vim
+  - gnupg2
 
 k8s_modules:
   - br_netfilter
