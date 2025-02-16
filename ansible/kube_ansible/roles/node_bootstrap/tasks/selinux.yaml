@@ -1,4 +1,4 @@
-
+---
 - name: Ensure SELinux is set to permissive in the configuration file
   ansible.builtin.lineinfile:
     path: /etc/selinux/config

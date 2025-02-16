@@ -1,4 +1,4 @@
-
+---
 - name: install apt packages from kube docs
   ansible.builtin.apt:
     name:

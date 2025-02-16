@@ -5,5 +5,5 @@
     - control
     - worker
   roles:
-    # - node_bootstrap
+    - node_bootstrap
     - containerd

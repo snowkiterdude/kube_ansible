@@ -1,0 +1,53 @@
+---
+- name: Check for glibc
+  ansible.builtin.command: ldd /bin/ls
+  register: ldd_output
+  changed_when: false
+  tags:
+    - containerd
+
+- name: Verify glibc-based system
+  ansible.builtin.fail:
+    msg: "This system is not glibc-based (musl detected). Containerd binary requires a glibc-based system."
+  when: "'libc.so.6' not in ldd_output.stdout"
+  tags:
+    - containerd
+
+- name: Get system architecture
+  ansible.builtin.set_fact:
+    system_arch: "{{ 'arm64' if ansible_architecture == 'aarch64' else 'amd64' }}"
+  tags:
+    - containerd
+
+- name: Set containerd download info
+  ansible.builtin.set_fact:
+    containerd_info: >-
+      {{ containerd_releases | selectattr('version', 'eq', containerd_version) 
+         | selectattr('arch', 'eq', system_arch) | list }}
+  failed_when: containerd_info | length == 0
+  register: containerd_info_result
+  tags:
+    - containerd
+
+- name: Set final containerd info
+  ansible.builtin.set_fact:
+    containerd_info: "{{ containerd_info[0] }}"
+  when: containerd_info_result is success
+  tags:
+    - containerd
+
+- name: debug
+  ansible.builtin.debug:
+    var: containerd_info
+  tags:
+    - containerd
+
+- name: Ensure /usr/local/bin is in PATH
+  ansible.builtin.copy:
+    dest: /etc/profile.d/local-bin-path.sh
+    content: 'export PATH=$PATH:/usr/local/bin'
+    mode: '0644'
+    owner: root
+    group: root
+  tags:
+    - containerd

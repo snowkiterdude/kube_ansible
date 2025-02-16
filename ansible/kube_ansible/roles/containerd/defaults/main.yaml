@@ -3,20 +3,30 @@
 containerd_version: v2.0.2
 
 # https://github.com/containerd/containerd/releases
+# https://github.com/containerd/nerdctl/releases
+# Make sure the nerdctl binary is compatible with the containerd version as specified in the nerdctl release page.
 containerd_releases:
   - version: v2.0.2
     arch: amd64
     tar_url: https://github.com/containerd/containerd/releases/download/v2.0.2/containerd-2.0.2-linux-amd64.tar.gz
     checksum_url: https://github.com/containerd/containerd/releases/download/v2.0.2/containerd-2.0.2-linux-amd64.tar.gz.sha256sum
+    nerdctl_url: https://github.com/containerd/nerdctl/releases/download/v2.0.3/nerdctl-2.0.3-linux-amd64.tar.gz
+    nerdctl_checksum_url: https://github.com/containerd/nerdctl/releases/download/v2.0.3/SHA256SUMS
   - version: v2.0.2
     arch: arm64
     tar_url: https://github.com/containerd/containerd/releases/download/v2.0.2/containerd-2.0.2-linux-arm64.tar.gz
     checksum_url: https://github.com/containerd/containerd/releases/download/v2.0.2/containerd-2.0.2-linux-arm64.tar.gz.sha256sum
+    nerdctl_url: https://github.com/containerd/nerdctl/releases/download/v2.0.3/nerdctl-2.0.3-linux-arm64.tar.gz
+    nerdctl_checksum_url: https://github.com/containerd/nerdctl/releases/download/v2.0.3/SHA256SUMS
   - version: v1.7.25
     arch: amd64
     tar_url: https://github.com/containerd/containerd/releases/download/v1.7.25/containerd-1.7.25-linux-amd64.tar.gz
     checksum_url: https://github.com/containerd/containerd/releases/download/v1.7.25/containerd-1.7.25-linux-amd64.tar.gz.sha256sum
+    nerdctl_url: https://github.com/containerd/nerdctl/releases/download/v2.0.3/nerdctl-2.0.3-linux-amd64.tar.gz
+    nerdctl_checksum_url: https://github.com/containerd/nerdctl/releases/download/v2.0.3/SHA256SUMS
   - version: v1.7.25
     arch: arm64
     tar_url: https://github.com/containerd/containerd/releases/download/v1.7.25/containerd-1.7.25-linux-arm64.tar.gz
     checksum_url: https://github.com/containerd/containerd/releases/download/v1.7.25/containerd-1.7.25-linux-arm64.tar.gz.sha256sum
+    nerdctl_url: https://github.com/containerd/nerdctl/releases/download/v2.0.3/nerdctl-2.0.3-linux-arm64.tar.gz
+    nerdctl_checksum_url: https://github.com/containerd/nerdctl/releases/download/v2.0.3/SHA256SUMS

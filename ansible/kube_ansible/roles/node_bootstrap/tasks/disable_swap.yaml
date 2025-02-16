@@ -1,3 +1,4 @@
+---
 - name: Write noswap systemd service config file
   template:
     src: noswap.service.j2

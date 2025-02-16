@@ -24,7 +24,6 @@
       - "kernel: {{ ansible_facts.kernel }}"
       - "kernel_version: {{ ansible_facts.kernel_version }}"
   tags:
-    - always
     - node_bootstrap
 
 - name: include disable_swap tasks
@@ -91,10 +90,3 @@
   tags:
     - node_bootstrap
     - dnf
-
-
-
-
-
-# todo setup bridging?!?
-
