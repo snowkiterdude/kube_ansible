@@ -2,7 +2,18 @@
 localhost ansible_connection=local
 
 [control]
-18.144.60.197
+54.215.192.103
+
+[control:children]
+primary_control_node
+secondary_control_nodes
+
+[primary_control_node]
+54.215.192.103
+
+[secondary_control_nodes]
+50.18.101.242
 
 [worker]
-3.101.121.35
+13.56.236.127
+3.101.57.228

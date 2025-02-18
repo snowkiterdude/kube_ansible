@@ -3,7 +3,8 @@
   become: true
   hosts:
     - control
-    - worker
+    - workers
   roles:
     - node_bootstrap
     - containerd
+    - kubeadm

@@ -57,6 +57,7 @@
     - node_bootstrap
     - selinux
 
+# disabling for now... todo configure selinux for K8s
 - name: include selinux tasks
   ansible.builtin.include_tasks: selinux.yaml
   when:

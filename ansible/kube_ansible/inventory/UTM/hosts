@@ -1,10 +1,18 @@
 [local]
 localhost ansible_connection=local
 
-[control]
-control-01
+[control:children]
+primary_control_node
+secondary_control_nodes
 
-[worker]
-worker-01
-worker-02
-worker-03
+[primary_control_node]
+control-01.dev.cluster.local
+
+[secondary_control_nodes]
+control-01.dev.cluster.local
+control-01.dev.cluster.local
+
+[workers]
+worker-01.dev.cluster.local
+worker-02.dev.cluster.local
+worker-03.dev.cluster.local

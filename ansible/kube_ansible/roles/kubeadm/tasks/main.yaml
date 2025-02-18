@@ -1,0 +1,22 @@
+---
+- name: Include primary control node kubeadm tasks
+  ansible.builtin.include_tasks: primary_control_node.yaml
+  when:
+    - inventory_hostname in groups['primary_control_node']
+  tags:
+   - primary_control_node
+   - kubeadm
+
+# - name: Include secondary control node kubeadm tasks
+#   ansible.builtin.include_tasks: secondary_control_nodes.yaml
+#   when:
+#     - inventory_hostname in groups['secondary_control_nodes']
+#   tags:
+#     - kubeadm
+
+# - name: Include worker nodes kubeadm tasks
+#   ansible.builtin.include_tasks: workers.yaml
+#   when:
+#     - inventory_hostname in groups['workers']
+#   tags:
+#     - kubeadm
