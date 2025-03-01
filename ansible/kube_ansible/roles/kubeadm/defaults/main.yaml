@@ -12,7 +12,7 @@ k8s_version: v1.30.0
 
 api_version: kubeadm.k8s.io/v1beta3
 cri_socket: unix:///run/containerd/containerd.sock
-control_plane_endpoint_ip: 10.50.50.80
+control_plane_endpoint_ip: 10.50.50.81
 control_plane_endpoint_port: "6443"
 api_endpoint_cert_names:
   # localhost
