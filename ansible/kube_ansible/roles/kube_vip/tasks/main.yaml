@@ -1,0 +1,27 @@
+---
+- name: make sure /etc/kubernetes/manifests exists
+  ansible.builtin.file:
+    path: /etc/kubernetes/manifests
+    state: directory
+  tags:
+    - kube_vip
+
+- name: template the kube-vip static pod manifest
+  ansible.builtin.shell:
+    cmd: >-
+      nerdctl run
+      --rm
+      -v /etc/kubernetes/manifests/:/etc/kubernetes/manifests
+      ghcr.io/kube-vip/kube-vip:{{ kube_vip_version }}
+      manifest pod
+      --interface {{ kube_vip_interface }}
+      --vip {{ kube_vip_vip }}
+      --controlplane
+      --services
+      --arp
+      --leaderElection
+      > /etc/kubernetes/manifests/vip.yaml
+  when:
+    - inventory_hostname in groups['primary_control_node']
+  tags:
+    - kube_vip

@@ -7,29 +7,33 @@ pod_subnet: 10.244.0.0/16
 service_subnet: 10.245.0.0/16
 service_ip: "10.245.0.1"       # This should be the first Usable IP Address in the service CIDR
 
-cluster_name: dev.cluster.local
+cluster_name: dev
+dns_domain: cluster.local
+api_external_fqdn: api.dev.skd.local
+nodes_domain: dev.skd.local
 k8s_version: v1.30.0
 
 api_version: kubeadm.k8s.io/v1beta3
 cri_socket: unix:///run/containerd/containerd.sock
-control_plane_endpoint_ip: 10.50.50.81
+control_plane_endpoint_ip: 10.50.50.80
 control_plane_endpoint_port: "6443"
 api_endpoint_cert_names:
   # localhost
   - "127.0.0.1"
   - "::1"
+  - "localhost"
 
   # Kubernetes API service IP
   - "{{ service_ip }}"
 
   # Load balancer/API endpoint
   - "{{ control_plane_endpoint_ip }}"
-  - "api.{{ cluster_name }}"
+  - "{{ api_external_fqdn }}"
 
   # Control plane nodes
-  - "control-01.{{ cluster_name }}"
-  - "control-02.{{ cluster_name }}"
-  - "control-03.{{ cluster_name }}"
+  - "control-01.{{ nodes_domain }}"
+  - "control-02.{{ nodes_domain }}"
+  - "control-03.{{ nodes_domain }}"
   - "10.50.50.81"
   - "10.50.50.82"
   - "10.50.50.83"
@@ -38,4 +42,4 @@ api_endpoint_cert_names:
   - "kubernetes"
   - "kubernetes.default"
   - "kubernetes.default.svc"
-  - "kubernetes.default.svc.{{ cluster_name }}"
+  - "kubernetes.default.svc.{{ dns_domain }}"

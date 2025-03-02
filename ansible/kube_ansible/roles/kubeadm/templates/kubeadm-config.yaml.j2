@@ -1,10 +1,11 @@
 ---
 apiVersion: {{ api_version }}
 kind: ClusterConfiguration
+clusterName: "{{ cluster_name }}"
 networking:
   podSubnet: "{{ pod_subnet }}"
   serviceSubnet: "{{ service_subnet }}"
-  dnsDomain: "{{ cluster_name }}"
+  dnsDomain: "{{ dns_domain }}"
 kubernetesVersion: "{{ k8s_version }}"
 controlPlaneEndpoint: "{{ control_plane_endpoint_ip }}:{{ control_plane_endpoint_port }}"
 apiServer:
