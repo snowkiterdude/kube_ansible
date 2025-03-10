@@ -6,13 +6,13 @@ primary_control_node
 secondary_control_nodes
 
 [primary_control_node]
-control-01.dev.skd.local
+control01
 
 [secondary_control_nodes]
-control-02.dev.skd.local
-control-03.dev.skd.local
+control02
+control03
 
-[workers]
-worker-01.dev.skd.local
-worker-02.dev.skd.local
-worker-03.dev.skd.local
+[worker]
+worker01
+worker02
+worker03
