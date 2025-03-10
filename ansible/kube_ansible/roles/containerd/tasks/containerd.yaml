@@ -1,0 +1,78 @@
+---
+- name: Download containerd
+  block:
+    - name: Download checksum file
+      ansible.builtin.get_url:
+        url: "{{ containerd_info.checksum_url }}"
+        dest: /tmp/containerd.sha256sum
+        mode: '0644'
+
+    - name: Read checksum file
+      ansible.builtin.slurp:
+        src: /tmp/containerd.sha256sum
+      register: checksum_content
+
+    - name: Download and verify containerd
+      ansible.builtin.get_url:
+        url: "{{ containerd_info.tar_url }}"
+        dest: /tmp/containerd.tar.gz
+        checksum: "sha256:{{ (checksum_content['content'] | b64decode).split(' ')[0] }}"
+        mode: '0644'
+
+    - name: Extract containerd to /usr/local
+      ansible.builtin.unarchive:
+        src: /tmp/containerd.tar.gz
+        dest: /usr/local
+        remote_src: yes
+
+    - name: Clean up containerd downloaded files
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /tmp/containerd.tar.gz
+        - /tmp/containerd.sha256sum
+
+  rescue:
+    - name: Clean up on failure
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /tmp/containerd.tar.gz
+        - /tmp/containerd.sha256sum
+
+    - name: Fail with error
+      ansible.builtin.fail:
+        msg: "Failed to download and verify containerd"
+  tags:
+    - containerd
+
+- name: Create systemd directory if it doesn't exist
+  ansible.builtin.file:
+    path: /usr/local/lib/systemd/system
+    state: directory
+    mode: '0755'
+    owner: root
+    group: root
+  tags:
+    - containerd
+
+- name: Download containerd systemd service file
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/containerd/containerd/main/containerd.service
+    dest: /usr/local/lib/systemd/system/containerd.service
+    mode: '0644'
+    owner: root
+    group: root
+  tags:
+    - containerd
+
+- name: Enable and start containerd service
+  ansible.builtin.systemd:
+    name: containerd
+    state: started
+    enabled: yes
+    daemon_reload: yes
+  tags:
+    - containerd

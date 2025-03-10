@@ -1,0 +1,11 @@
+---
+- name: basic node bootstrapping
+  become: true
+  hosts:
+    - control
+    - workers
+  roles:
+    - node_bootstrap
+    - containerd
+    - kube_vip
+    - kubeadm

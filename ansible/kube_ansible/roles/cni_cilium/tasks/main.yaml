@@ -1,0 +1,27 @@
+---
+
+should run on localhost
+
+TODO work in progress
+
+- name: Add Helm repository
+  kubernetes.core.helm_repository:
+    name: cilium
+    repo_url: https://helm.cilium.io
+
+- name: Install Cilium
+  kubernetes.core.helm:
+    name: cilium
+    chart_ref: cilium/cilium
+    release_namespace: kube-system
+    create_namespace: true
+    update_repo_cache: true
+    values:
+      kubeProxyReplacement: strict
+      hubble:
+        enabled: true
+        relay:
+          enabled: true
+        ui:
+          enabled: true
+

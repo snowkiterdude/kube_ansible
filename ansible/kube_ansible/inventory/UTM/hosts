@@ -1,0 +1,18 @@
+[local]
+localhost ansible_connection=local
+
+[control:children]
+primary_control_node
+secondary_control_nodes
+
+[primary_control_node]
+control01
+
+[secondary_control_nodes]
+control02
+control03
+
+[worker]
+worker01
+worker02
+worker03

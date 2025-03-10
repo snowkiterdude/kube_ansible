@@ -1,0 +1,59 @@
+---
+
+# https://github.com/containerd/containerd/blob/main/docs/getting-started.md
+
+- name: Check if containerd is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/containerd
+  register: containerd_binary
+  tags:
+    - containerd
+    - cni_plugins
+    - runc
+    - nerdctl
+
+- name: Include init installation tasks
+  ansible.builtin.include_tasks: init.yaml
+  when:
+    - not containerd_binary.stat.exists or
+      reinstall | default(false)
+  tags:
+    - containerd
+    - cni_plugins
+    - runc
+    - nerdctl
+
+- name: Include containerd installation tasks
+  ansible.builtin.include_tasks: containerd.yaml
+  when:
+    - not containerd_binary.stat.exists or
+      reinstall | default(false)
+  tags:
+    - containerd
+
+- name: Include runc installation tasks
+  ansible.builtin.include_tasks: runc.yaml
+  when:
+    - not containerd_binary.stat.exists or
+      reinstall | default(false)
+  tags:
+    - containerd
+    - runc
+
+- name: Include cni_plugins installation tasks
+  ansible.builtin.include_tasks: cni_plugins.yaml
+  when:
+    - not containerd_binary.stat.exists or
+      reinstall | default(false)
+  tags:
+    - containerd
+    - cni_plugins
+
+- name: Include nerdctl installation tasks
+  ansible.builtin.include_tasks: nerdctl.yaml
+  when:
+    - not containerd_binary.stat.exists or
+      reinstall | default(false)
+  tags:
+    - containerd
+    - nerdctl

@@ -1,0 +1,18 @@
+---
+- name: Enable kernel modules
+  modprobe:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ k8s_modules }}"
+  tags:
+    - node_bootstrap
+    - kmodules
+
+- name: Configure modules load
+  copy:
+    dest: /etc/modules-load.d/k8s.conf
+    content: "{{ k8s_modules | join('\n') }}"
+    mode: '0644'
+  tags:
+    - node_bootstrap
+    - kmodules

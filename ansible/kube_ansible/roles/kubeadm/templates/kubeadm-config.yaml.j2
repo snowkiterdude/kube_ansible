@@ -1,0 +1,23 @@
+---
+apiVersion: {{ api_version }}
+kind: ClusterConfiguration
+clusterName: "{{ cluster_name }}"
+networking:
+  podSubnet: "{{ pod_subnet }}"
+  serviceSubnet: "{{ service_subnet }}"
+  dnsDomain: "{{ dns_domain }}"
+kubernetesVersion: "{{ k8s_version }}"
+controlPlaneEndpoint: "{{ control_plane_endpoint_ip }}:{{ control_plane_endpoint_port }}"
+apiServer:
+  extraArgs:
+    authorization-mode: "Node,RBAC"
+  certSANs:
+{% for cert_name in api_endpoint_cert_names %}
+    - "{{ cert_name }}"
+{% endfor %}
+
+---
+apiVersion: {{ api_version }}
+kind: InitConfiguration
+nodeRegistration:
+  criSocket: "{{ cri_socket }}"

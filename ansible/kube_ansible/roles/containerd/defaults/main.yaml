@@ -1,0 +1,51 @@
+
+# version to install
+containerd_version: v2.0.2
+
+cni_plugin_min_version: 1.4.0
+
+# https://github.com/containerd/containerd/releases
+# https://github.com/containerd/nerdctl/releases
+# https://github.com/opencontainers/runc/releases
+# https://github.com/containernetworking/plugins/releases
+containerd_releases:
+  - version: v2.0.2
+    arch: amd64
+    tar_url: https://github.com/containerd/containerd/releases/download/v2.0.2/containerd-2.0.2-linux-amd64.tar.gz
+    checksum_url: https://github.com/containerd/containerd/releases/download/v2.0.2/containerd-2.0.2-linux-amd64.tar.gz.sha256sum
+    nerdctl_url: https://github.com/containerd/nerdctl/releases/download/v2.0.3/nerdctl-2.0.3-linux-amd64.tar.gz
+    nerdctl_checksum_url: https://github.com/containerd/nerdctl/releases/download/v2.0.3/SHA256SUMS
+    runc_url: https://github.com/opencontainers/runc/releases/download/v1.2.5/runc.amd64
+    runc_checksum_url: https://github.com/opencontainers/runc/releases/download/v1.2.5/runc.sha256sum
+    cni_url: https://github.com/containernetworking/plugins/releases/download/v1.6.2/cni-plugins-linux-amd64-v1.6.2.tgz
+    cni_checksum_url: https://github.com/containernetworking/plugins/releases/download/v1.6.2/cni-plugins-linux-amd64-v1.6.2.tgz.sha256
+  - version: v2.0.2
+    arch: arm64
+    tar_url: https://github.com/containerd/containerd/releases/download/v2.0.2/containerd-2.0.2-linux-arm64.tar.gz
+    checksum_url: https://github.com/containerd/containerd/releases/download/v2.0.2/containerd-2.0.2-linux-arm64.tar.gz.sha256sum
+    nerdctl_url: https://github.com/containerd/nerdctl/releases/download/v2.0.3/nerdctl-2.0.3-linux-arm64.tar.gz
+    nerdctl_checksum_url: https://github.com/containerd/nerdctl/releases/download/v2.0.3/SHA256SUMS
+    runc_url: https://github.com/opencontainers/runc/releases/download/v1.2.5/runc.arm64
+    runc_checksum_url: https://github.com/opencontainers/runc/releases/download/v1.2.5/runc.sha256sum
+    cni_url: https://github.com/containernetworking/plugins/releases/download/v1.6.2/cni-plugins-linux-arm64-v1.6.2.tgz
+    cni_checksum_url: https://github.com/containernetworking/plugins/releases/download/v1.6.2/cni-plugins-linux-arm64-v1.6.2.tgz.sha256
+  - version: v1.7.25
+    arch: amd64
+    tar_url: https://github.com/containerd/containerd/releases/download/v1.7.25/containerd-1.7.25-linux-amd64.tar.gz
+    checksum_url: https://github.com/containerd/containerd/releases/download/v1.7.25/containerd-1.7.25-linux-amd64.tar.gz.sha256sum
+    nerdctl_url: https://github.com/containerd/nerdctl/releases/download/v2.0.3/nerdctl-2.0.3-linux-amd64.tar.gz
+    nerdctl_checksum_url: https://github.com/containerd/nerdctl/releases/download/v2.0.3/SHA256SUMS
+    runc_url: https://github.com/opencontainers/runc/releases/download/v1.2.5/runc.amd64
+    runc_checksum_url: https://github.com/opencontainers/runc/releases/download/v1.2.5/runc.sha256sum
+    cni_url: https://github.com/containernetworking/plugins/releases/download/v1.6.2/cni-plugins-linux-amd64-v1.6.2.tgz
+    cni_checksum_url: https://github.com/containernetworking/plugins/releases/download/v1.6.2/cni-plugins-linux-amd64-v1.6.2.tgz.sha256
+  - version: v1.7.25
+    arch: arm64
+    tar_url: https://github.com/containerd/containerd/releases/download/v1.7.25/containerd-1.7.25-linux-arm64.tar.gz
+    checksum_url: https://github.com/containerd/containerd/releases/download/v1.7.25/containerd-1.7.25-linux-arm64.tar.gz.sha256sum
+    nerdctl_url: https://github.com/containerd/nerdctl/releases/download/v2.0.3/nerdctl-2.0.3-linux-arm64.tar.gz
+    nerdctl_checksum_url: https://github.com/containerd/nerdctl/releases/download/v2.0.3/SHA256SUMS
+    runc_url: https://github.com/opencontainers/runc/releases/download/v1.2.5/runc.arm64
+    runc_checksum_url: https://github.com/opencontainers/runc/releases/download/v1.2.5/runc.sha256sum
+    cni_url: https://github.com/containernetworking/plugins/releases/download/v1.6.2/cni-plugins-linux-arm64-v1.6.2.tgz
+    cni_checksum_url: https://github.com/containernetworking/plugins/releases/download/v1.6.2/cni-plugins-linux-arm64-v1.6.2.tgz.sha256

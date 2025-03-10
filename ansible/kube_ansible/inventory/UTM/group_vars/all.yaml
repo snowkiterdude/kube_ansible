@@ -1,0 +1,6 @@
+ansible_become: true
+ansible_become_method: sudo
+
+
+# containerd_version: v2.0.2
+containerd_version: v1.7.25
